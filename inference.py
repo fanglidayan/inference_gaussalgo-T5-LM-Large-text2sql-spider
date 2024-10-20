@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
 import warnings
+
 warnings.filterwarnings("ignore")
 
 # Model path (make sure this is the correct path)
@@ -15,14 +15,16 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 
-# Define a sample question and schema
-question = "What is the average, minimum, and maximum age for all French musicians?"
+# Hardcoded schema
 schema = """
    "stadium" "Stadium_ID" int , "Location" text , "Name" text , "Capacity" int , "Highest" int , "Lowest" int , "Average" int , foreign_key:  primary key: "Stadium_ID" [SEP] 
    "singer" "Singer_ID" int , "Name" text , "Country" text , "Song_Name" text , "Song_release_year" text , "Age" int , "Is_male" bool , foreign_key:  primary key: "Singer_ID" [SEP] 
    "concert" "concert_ID" int , "concert_Name" text , "Theme" text , "Year" text , foreign_key: "Stadium_ID" text from "stadium" "Stadium_ID" , primary key: "concert_ID" [SEP] 
    "singer_in_concert"  foreign_key: "concert_ID" int from "concert" "concert_ID" , "Singer_ID" text from "singer" "Singer_ID" , primary key: "concert_ID" "Singer_ID"
 """
+
+# Take the question as input from the terminal
+question = input("Enter your question: ")
 
 # Prepare the input text
 input_text = " ".join(["Question:", question, "Schema:", schema])
