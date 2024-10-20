@@ -7,8 +7,5 @@ docker volume create t5-cache
 # mount the docker volume during docker run
 docker run --rm -it -v t5-cache:/root/.cache/huggingface t5-inference
 
-# docker run
-docker run --rm -it -v t5-cache:/root/.cache/huggingface t5-inference
-
 # clear docker volume cache
 docker volume rm t5-cache
