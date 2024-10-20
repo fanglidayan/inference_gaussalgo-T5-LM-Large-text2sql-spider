@@ -1,0 +1,11 @@
+# docker build
+sudo docker build -t t5-inference .
+
+# create a docker volume
+docker volume create t5-cache
+
+# mount the docker volume during docker run
+docker run --rm -it -v t5-cache:/root/.cache/huggingface t5-inference
+
+# docker run
+docker run --rm -it -v t5-cache:/root/.cache/huggingface t5-inference
